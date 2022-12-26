@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speedometer</title>
+    <style>
+        #wrapper {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            border: 1px solid black;
+        }
+
+        #meter {
+            width: 100%;
+            height: 100%;
+            transform: rotateX(180deg);
+        }
+
+        .circle {
+            fill: none;
+        }
+
+        .outline,
+        #mask {
+            stroke: #F1F1F1;
+            stroke-width: 65;
+        }
+
+        .range {
+            stroke-width: 60;
+        }
+        /* to allow the text to be in the image */
+        #imageText {
+            position: absolute;
+            top: 55%;
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<!-- x1 y1 start of line, x2 y2 end of line  -->
+<!-- green: x1="50" y1="300" x2="200" y2="200"
+yellow: x1="200" y1="200" x2="200" y2="380"
+red: x1="200" y1="200" x2="350" y2="300" -->
+
+<body>
+    <!-- select green -->
+    <div id="wrapper">
+        <svg id="meter">
+
+            <!-- Low Range Zone (Green) -->
+            <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                fill="none">
+            </circle>
+
+            <!-- Average Range Zone (Yellow) -->
+            <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                fill="none">
+            </circle>
+
+            <!-- High Range Zone (Red) -->
+            <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                fill="none">
+            </circle>
+
+            <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+            <text>hello</text>
+            <line x1="50" y1="300" x2="200" y2="200" style="stroke:#678983;stroke-width:5" />
+        </svg>
+        <div id="imageText">helloworld</div>
+    </div>
+
+    <!-- select yellow -->
+    <div id="wrapper">
+        <svg id="meter">
+
+            <!-- Low Range Zone (Green) -->
+            <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                fill="none">
+            </circle>
+
+            <!-- Average Range Zone (Yellow) -->
+            <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                fill="none">
+            </circle>
+
+            <!-- High Range Zone (Red) -->
+            <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                fill="none">
+            </circle>
+
+            <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+            <line x1="200" y1="200" x2="200" y2="380" style="stroke:#678983;stroke-width:5" />
+        </svg>
+        <div id="imageText">helloworld</div>
+    </div>
+    <!-- select red -->
+    <div id="wrapper">
+        <svg id="meter">
+
+            <!-- Low Range Zone (Green) -->
+            <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                fill="none">
+            </circle>
+
+            <!-- Average Range Zone (Yellow) -->
+            <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                fill="none">
+            </circle>
+
+            <!-- High Range Zone (Red) -->
+            <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                fill="none">
+            </circle>
+
+            <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+            <!-- <line x1="200" y1="200" x2="350" y2="300" style="stroke:#678983;stroke-width:5" /> -->
+        </svg>
+        <div id="imageText">helloworld</div>
+
+    </div>
+
+    <!-- old html view of speedometer -->
+    <div class="card-footer text-center">
+        <div id="speedometer">
+            <div id="wrapper">
+                <h4>Refresh calendar to find out how's your workload!</h4>
+                <svg id="meter">
+                    <!-- Low Range Zone (Green) -->
+                    <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60"
+                        stroke-dasharray="471, 943" fill="none">
+                    </circle>
+
+                    <!-- Average Range Zone (Yellow) -->
+                    <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60"
+                        stroke-dasharray="314, 943" fill="none">
+                    </circle>
+
+                    <!-- High Range Zone (Red) -->
+                    <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60"
+                        stroke-dasharray="157, 943" fill="none">
+                    </circle>
+
+                    <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+                    <!-- <line x1="50" y1="300" x2="200" y2="200" style="stroke:#181D31;stroke-width:5" /> -->
+                </svg>
+                <!-- <p>You have ${numHours} hours of tasks for the rest of the week!</p> -->
+            </div>
+            <button type="button" id="authorize_button" class="btn btn-warning">Refresh calendar
+                data!</button>
+            <p id="totalHours"></p>
+        </div>
+    </div>
+    <!-- end -->
+</body>
+<script>
+    //  old display
+    function display(color, numHours){
+    let output = ''
+    if (color == 'green'){
+        output = `
+        <div id="wrapper">
+            <h4>You're Good!</h4>
+            <svg id="meter">
+        
+                <!-- Low Range Zone (Green) -->
+                <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- Average Range Zone (Yellow) -->
+                <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- High Range Zone (Red) -->
+                <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                    fill="none">
+                </circle>
+        
+                <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+                <line x1="50" y1="300" x2="200" y2="200" style="stroke:#181D31;stroke-width:5" />
+            </svg>
+            <div id="imageText">You have ${numHours} hours of tasks for the rest of the week!</div>
+        </div>`        
+    }
+    else if (color == 'yellow'){
+        output =`
+        <div id="wrapper">
+            <h4>You're doing okay!</h4>
+            <svg id="meter">
+        
+                <!-- Low Range Zone (Green) -->
+                <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- Average Range Zone (Yellow) -->
+                <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- High Range Zone (Red) -->
+                <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                    fill="none">
+                </circle>
+        
+                <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+                <line x1="200" y1="200" x2="200" y2="380" style="stroke:#678983;stroke-width:5" />
+        
+            </svg>
+            <div id="imageText">You have ${numHours} hours of tasks for the rest of the week!</div>
+        </div>`
+    }
+    else if (color == "red"){
+        output =  `
+        <div id="wrapper">
+            <h4>You're Stressed!</h4>
+            <svg id="meter">
+                <!-- Low Range Zone (Green) -->
+                <circle id="low" r="150" cx="50%" cy="50%" stroke="#B2EA70" stroke-width="60" stroke-dasharray="471, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- Average Range Zone (Yellow) -->
+                <circle id="avg" r="150" cx="50%" cy="50%" stroke="#FBD148" stroke-width="60" stroke-dasharray="314, 943"
+                    fill="none">
+                </circle>
+        
+                <!-- High Range Zone (Red) -->
+                <circle id="high" r="150" cx="50%" cy="50%" stroke="#C85C5C" stroke-width="60" stroke-dasharray="157, 943"
+                    fill="none">
+                </circle>
+        
+                <circle id="outline_ends" class="circle outline" cx="50%" cy="50%"></circle>
+                <line x1="200" y1="200" x2="350" y2="300" style="stroke:#678983;stroke-width:5" />
+        
+            </svg>
+            <div id="imageText">You have ${numHours} hours of tasks for the rest of the week!</div>
+        </div>`
+    }
+    document.getElementById("speedometer").innerHTML = output
+    return
+}
+
+
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+.chart-gauge {
+    width: 340px;
+    height: 210px;
+}
+
+.chart-first {
+    fill: #9FBD35;
+}
+
+.chart-second {
+    fill: #F2BA3A;
+}
+
+.chart-third {
+    fill: #FB3033;
+}
+
+.needle,
+.needle-center {
+    fill: #000000;
+}
+
+.text {
+    color: "#112864";
+    font-size: 16px;
+}
+
+
+svg {
+    font: 10px sans-serif;
+}
